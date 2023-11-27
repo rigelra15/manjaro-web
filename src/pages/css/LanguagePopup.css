@@ -1,0 +1,51 @@
+/* LanguagePopup.css */
+.language-popup-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 1.0); /* Latar belakang abu-abu gelap dengan opacity */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Pastikan pop-up ada di atas konten lain */
+}
+
+.language-popup {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Styling for the rest of the pop-up content */
+.language-popup h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.language-options label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.language-options label input {
+  margin-right: 5px;
+}
+
+/* Styling for the Confirm button */
+.language-popup button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.language-popup button:hover {
+  background-color: #0056b3;
+}

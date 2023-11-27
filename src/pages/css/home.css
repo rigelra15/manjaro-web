@@ -1,0 +1,78 @@
+/* Home.css */
+
+.menu-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 0;
+  overflow: hidden;
+  transition: width 0.8s;
+  z-index: 1;
+  backdrop-filter: blur(4px)
+}
+
+.menu-overlay.open {
+  width: 100%;
+}
+
+.menu-item {
+  transform: translateX(100%); /* Start off-screen to the right */
+  opacity: 0;
+  transition: padding-left 1s, opacity 0.3s;
+  font-size: 40px;
+  margin-bottom: 5px;
+  padding-left: 30px;
+  text-decoration: none;
+  color: white;
+}
+
+.menu-item:not(.active):hover {
+    color: gray;
+    padding-left: 50px;
+    transform: translateX(0%);
+    transition: padding-left 1s, opacity 1s;
+}
+
+.menu-item.active {
+  color: #2C8E53;
+}
+
+.menu-overlay.open .menu-item {
+  transform: translateX(0); /* Slide in from the right */
+  opacity: 1; /* Fade in */
+}
+
+.logo-white:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* CSS for Indicator Circles */
+.indicator-circles {
+  position: fixed;
+  top: 50%;
+  right: 20px; /* Adjust the right margin as needed */
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.indicator-circle {
+  width: 10px; /* Adjust the width of the circles */
+  height: 10px; /* Adjust the height of the circles */
+  background-color: #2C8E53; /* Change the background color */
+  border-radius: 50%;
+  margin: 5px 0; /* Adjust the vertical spacing between circles */
+  cursor: pointer;
+  transition: background-color 0.3s; /* Add a transition effect for hover */
+}
+
+.indicator-circle:hover {
+  background-color: #3A6742; /* Change the background color on hover */
+}

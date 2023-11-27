@@ -1,0 +1,20 @@
+/* Add this to your existing CSS file or create a new one */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent white background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Adjust z-index to ensure it's above other elements */
+  backdrop-filter: blur(3px);
+}
+
+.loading-overlay p {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff; /* Adjust text color */
+}
