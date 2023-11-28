@@ -1,21 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logoManjaro from '../assets/logo-manjaro.png';
-import { FaMagnifyingGlass } from "react-icons/fa6";
+import { FaMagnifyingGlass, FaBars } from 'react-icons/fa6';
 
 const NavBar = () => {
+  const location = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const location = useLocation()
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <>
-      <nav className="bg-opacity-70 backdrop-blur-md bg-white p-4 justify-between flex items-center fixed w-screen z-10 shadow-md">
-        <div className="ml-20">
+      <nav className="bg-opacity-70 backdrop-blur-md bg-white p-4 justify-between flex items-center fixed w-full z-50 shadow-md">
+        <div className="ml-5 lg:ml-20">
           <Link to="/">
-            <img src={logoManjaro} alt="logo-manjaro" className='w-16' />
+            <img src={logoManjaro} alt="logo-manjaro" className="w-16" />
           </Link>
         </div>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <ul className="flex lg:space-x-10 md:space-x-3 items-center justify-center">
+        <div className="lg:hidden">
+          <button onClick={toggleMenu} className="p-2">
+            <FaBars />
+          </button>
+        </div>
+        <div
+          className={`${
+            menuOpen ? 'block' : 'hidden'
+          } lg:flex absolute inset-0 flex items-center justify-center`}
+        >
+          <ul className="flex lg:visible lg:space-x-2 invisible md:space-x-0 items-center justify-center">
             <li className={`px-4 py-1 rounded-full ${location.pathname === '/' ? 'bg-[#DC143C] text-white' : 'text-black hover:bg-gray-300 transition-transform duration-500'}`}>
               <Link to="/">Home</Link>
             </li>
@@ -30,13 +44,14 @@ const NavBar = () => {
             </li>
           </ul>
         </div>
-        <div className="mr-20 relative">
+        <div className="mr-5 lg:mr-20 relative">
           <div className="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-none">
-            <FaMagnifyingGlass className='text-gray-400' />
+            <FaMagnifyingGlass className="text-gray-400" />
           </div>
           <input
             type="text"
             placeholder="Search"
+            style={{ width: 150 }}
             className="p-2 pl-5 border-2 rounded-full"
           />
         </div>

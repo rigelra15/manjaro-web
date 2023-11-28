@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBar from './NavBar';
 import { Helmet } from 'react-helmet';
-import UnderConst from '../assets/underconst/underconst.jpg'
+import MaintenanceVid from '../assets/web.mp4'
 
 const Achievement = () => {
   return (
@@ -10,8 +10,10 @@ const Achievement = () => {
             <title>Achievements | Manjaro - Computer Engineering 2022</title>
         </Helmet>
       <NavBar />
-      <div className='flex justify-center items-center h-screen'>
-        <img src={UnderConst} alt="under-construction-icon" width={700} />
+      <div className='flex justify-center items-center h-screen flex-col'>
+        <video autoPlay loop muted src={MaintenanceVid} width={500}></video>
+        <h2 className='-mt-10 font-bold text-lg'>We are Under Construction</h2>
+        <h3>We will back soon!</h3>
       </div>
     </div>
   );

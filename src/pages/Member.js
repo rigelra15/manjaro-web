@@ -23,9 +23,9 @@ const Member = () => {
     <div>
       <NavBar />
       <div className="flex justify-center items-center">
-        <div className={`grid ${isGrid ? 'lg:grid-cols-5' : 'md:grid-cols-2 lg:grid-cols-3'} gap-4 mt-28`}>
+        <div className={`grid ${isGrid ? 'lg:grid-cols-4 2xl:grid-cols-5 grid-cols-2' : 'grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4'} gap-4 mt-36 mx-5 lg:mx-20`}>
           {members.map((member) => (
-            <div key={member.id} className={`relative rounded-[20px] overflow-hidden bg-white shadow-xl border-2 ${isGrid ? 'w-72' : 'w-full'}`}>
+            <div key={member.id} className={`relative rounded-[20px] overflow-hidden bg-white shadow-xl border-2 ${isGrid ? '2xl:w-72 lg:w-[250px] w-56' : 'w-full'}`}>
               {/* LogoWhite at top-left corner */}
               {isGrid ? (
                 <>
@@ -34,7 +34,7 @@ const Member = () => {
                       src={member.photo}
                       alt={member.name}
                       style={{ backgroundImage: `url(${bgMember})`, backgroundSize: 'cover' }}
-                      className={`w-[280px] h-[350px] rounded-[12px] object-cover ${getBackgroundColor(member.id)}`}
+                      className={`w-[280px] lg:h-[300px] 2xl:h-[350px] h-[270px] rounded-[12px] object-cover ${getBackgroundColor(member.id)}`}
                     />
                     <img
                       src={logoWhite}
@@ -55,7 +55,8 @@ const Member = () => {
                     <img
                       src={member.photo}
                       alt={member.name}
-                      className="w-full h-full object-cover"
+                      style={{ backgroundImage: `url(${bgMember})`, backgroundSize: 'cover' }}
+                      className={`w-full h-full object-cover ${getBackgroundColor(member.id)}`}
                     />
                   </div>
                   <div className="flex flex-col">
@@ -68,7 +69,7 @@ const Member = () => {
           ))}
         </div>
       </div>
-      <div className="fixed top-4 right-4 flex mt-36">
+      <div className="fixed top-0 right-8 lg:right-20 flex mt-[86px] bg-white px-2 py-2 rounded">
         <button
           onClick={toggleView}
           className={`py-2 px-2 ${isGrid ? 'bg-blue-500' : 'bg-gray-300'} text-white rounded mr-2`}

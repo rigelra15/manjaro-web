@@ -36,6 +36,13 @@ const members = [
   { id: 15, name: 'Sila Ulfania', nrp: '5024221016', photo: NRP16 },
 
   { id: 16, name: 'Ahmad Akmal Rijal', nrp: '5024221017', photo: NRP17 },
+  { id: 17, name: 'Muhamad Risqi Aditiya', nrp: '5024221010', photo: NRP10 },
+  { id: 18, name: 'Farrell Rafee Sudjatmiko', nrp: '5024221011', photo: NRP11 },
+  { id: 19, name: 'Yohana Magdalena Franklin Harianja', nrp: '5024221012', photo: NRP12 },
+  { id: 20, name: 'Muhammad Ihsan Alfarisi', nrp: '5024221013', photo: NRP13 },
+  { id: 21, name: 'Muhamad Rizano Alamsyah', nrp: '5024221014', photo: NRP14 },
+  { id: 22, name: 'Cedric Anthony Edysa', nrp: '5024221015', photo: NRP15 },
+  { id: 23, name: 'Sila Ulfania', nrp: '5024221016', photo: NRP16 },
 ];
 
 export default members;
