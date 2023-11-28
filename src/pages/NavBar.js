@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logoManjaro from '../assets/logo-manjaro.png';
-import { FaMagnifyingGlass, FaBars } from 'react-icons/fa6';
+import { FaMagnifyingGlass, FaBars, FaMoon } from 'react-icons/fa6';
 
 const NavBar = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.body.classList.toggle('dark');
   };
 
   return (
@@ -44,20 +50,91 @@ const NavBar = () => {
             </li>
           </ul>
         </div>
-        <div className="mr-5 lg:mr-20 relative">
-          <div className="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-none">
-            <FaMagnifyingGlass className="text-gray-400" />
+        <div className="mr-5 lg:mr-20 relative flex flex-row items-center justify-center gap-5">
+          <div>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-none">
+              <FaMagnifyingGlass className="text-gray-400" />
+            </div>
+            <input
+              type="text"
+              placeholder="Search"
+              style={{ width: 150 }}
+              className="p-2 pl-5 border-2 rounded-full"
+            />
           </div>
-          <input
-            type="text"
-            placeholder="Search"
-            style={{ width: 150 }}
-            className="p-2 pl-5 border-2 rounded-full"
-          />
+          {/* <div className="mr-5 lg:mr-20">
+            <button onClick={toggleDarkMode} className={`p-2 ${darkMode ? 'text-white' : 'text-black'}`}>
+              {darkMode ? 'Light' : 'Dark'} Mode
+            </button>
+          </div> */}
         </div>
       </nav>
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+        {`
+        /* The switch - the box around the slider */
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 46px;
+          height: 18px;
+        }
+        
+        /* Hide default HTML checkbox */
+        .switch input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+        
+        /* The slider */
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          -webkit-transition: .4s;
+          transition: .4s;
+        }
+        
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 26px;
+          width: 26px;
+          left: -4px;
+          bottom: -4px;
+          background-color: darkgray;
+          -webkit-transition: .4s;
+          transition: .4s;
+        }
+        
+        input:checked + .slider {
+          background-color: #2196F3;
+        }
+        
+        input:focus + .slider {
+          box-shadow: 0 0 1px #2196F3;
+        }
+        
+        input:checked + .slider:before {
+          -webkit-transform: translateX(26px);
+          -ms-transform: translateX(26px);
+          transform: translateX(26px);
+          background-color: darkblue;
+        }
+        
+        /* Rounded sliders */
+        .slider.round {
+          border-radius: 34px;
+        }
+        
+        .slider.round:before {
+          border-radius: 50%;
+        }`}
       </style>
     </>
   );
