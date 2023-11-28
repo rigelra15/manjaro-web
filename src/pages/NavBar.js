@@ -27,7 +27,7 @@ const NavBar = () => {
 
   const handleSearchFocus = () => {
     setSearchInputClass('focus');
-    setSearchInputWidth('300px');
+    setSearchInputWidth('250px');
   };
 
   const handleSearchBlur = () => {
