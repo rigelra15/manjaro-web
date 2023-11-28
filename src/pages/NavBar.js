@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logoManjaro from '../assets/logo-manjaro.png';
 import { FaMagnifyingGlass, FaBars } from 'react-icons/fa6';
+import bgMember from '../assets/bgMember20-Black.png';
 
 import members from '../membersData';
+
+const getBackgroundColor = (id) => {
+  const colors = ['bg-[#DC143C]', 'bg-[#49B8D3]', 'bg-[#FFD801]', 'bg-[#0066CC]'];
+  return colors[id % colors.length];
+};
 
 const NavBar = () => {
   const location = useLocation();
@@ -11,7 +17,8 @@ const NavBar = () => {
   const [searchInput, setSearchInput] = useState('');
   const [filteredMembers, setFilteredMembers] = useState(members);
   const [searchInputClass, setSearchInputClass] = useState('');
-  const [searchInputWidth, setSearchInputWidth] = useState('200px'); // Initial width of the search input
+  const [searchInputWidth, setSearchInputWidth] = useState('200px');
+  const [showSearchResults, setShowSearchResults] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -19,21 +26,44 @@ const NavBar = () => {
 
   const handleSearch = () => {
     const searchTerm = searchInput.toLowerCase();
-    const filtered = members.filter((member) =>
-      member.name.toLowerCase().includes(searchTerm) || member.nrp.includes(searchTerm)
+    const filtered = members.filter(
+      (member) =>
+        member.name.toLowerCase().includes(searchTerm) || member.nrp.includes(searchTerm)
     );
     setFilteredMembers(filtered);
+  };
+
+  const showSearchResultsOverlay = () => {
+    setShowSearchResults(true);
+  };
+
+  const hideSearchResultsOverlay = () => {
+    setShowSearchResults(false);
   };
 
   const handleSearchFocus = () => {
     setSearchInputClass('focus');
     setSearchInputWidth('250px');
+    showSearchResultsOverlay();
   };
 
   const handleSearchBlur = () => {
     setSearchInputClass('');
     setSearchInputWidth('200px');
+    setTimeout(() => hideSearchResultsOverlay(), 1);
   };
+
+  const handleResultClick = () => {
+    hideSearchResultsOverlay();
+  };
+
+  useEffect(() => {
+    // Tambahkan kondisi untuk hanya melakukan pencarian jika searchInput tidak kosong
+    if (searchInput.trim() !== '') {
+      handleSearch();
+      showSearchResultsOverlay();
+    }
+  }, [searchInput]);
 
   return (
     <>
@@ -91,9 +121,12 @@ const NavBar = () => {
             } ${searchInputClass}`}
             style={{ width: searchInputWidth }}
           >
+            <div className="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-none">
+              <FaMagnifyingGlass className={`${searchInputClass === 'focus' ? 'text-blue-500': 'text-gray-400'}`} />
+            </div>
             <input
               type="text"
-              placeholder="Search"
+              placeholder="Search Member"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               onFocus={handleSearchFocus}
@@ -101,13 +134,30 @@ const NavBar = () => {
               className="p-2 pl-5 border-2 rounded-full"
               style={{ width: '100%' }}
             />
-            <button
-              onClick={handleSearch}
-              className="ml-2 px-3 py-3 bg-gray-300 hover:bg-blue-500 text-white rounded-full"
-            >
-              <FaMagnifyingGlass />
-            </button>
           </div>
+          {showSearchResults && (
+            <div className="absolute top-14 bg-white border border-gray-300 w-full overflow-y-auto rounded-xl shadow-md">
+              {filteredMembers.slice(0, 5).map((member) => (
+                <div
+                  key={member.id}
+                  className="p-2 cursor-pointer hover:bg-gray-200 flex flex-row items-center justify-start"
+                  onClick={() => {
+                    hideSearchResultsOverlay();
+                  }}
+                >
+                  <div className="w-8 h-8 rounded-full overflow-hidden mr-4">
+                    <img
+                      src={member.photo}
+                      alt={member.name}
+                      style={{ backgroundImage: `url(${bgMember})`, backgroundSize: 'cover' }}
+                      className={`w-full h-full object-cover ${getBackgroundColor(member.id)}`}
+                    />
+                  </div>
+                  <h2>{member.name}</h2>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </nav>
       <style>
