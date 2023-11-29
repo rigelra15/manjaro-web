@@ -116,7 +116,7 @@ const NavBar = () => {
         </div>
         <div className="mr-5 lg:mr-20 relative flex flex-row items-center justify-center gap-5">
           <div
-            className={`transition-all duration-500 flex flex-row ${searchInputClass}`}
+            className={`transition-all duration-500 flex flex-row rounded-xl ${searchInputClass}`}
             style={{ width: searchInputWidth }}
           >
             <div className="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-none">
