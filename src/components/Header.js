@@ -11,7 +11,7 @@ const getBackgroundColor = (id) => {
   return colors[id % colors.length];
 };
 
-const NavBar = () => {
+const HeaderAdmin = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchInput, setSearchInput] = useState('');
@@ -81,82 +81,37 @@ const NavBar = () => {
         <div
           className={`${
             menuOpen ? 'block' : 'hidden'
-          } lg:flex absolute inset-0 flex items-center justify-center`}
+          } lg:flex absolute inset-0 flex items-center justify-end mr-10 z-50`}
         >
-          <ul className="flex lg:visible lg:space-x-2 invisible md:space-x-0 items-center justify-center">
+          <ul className="flex lg:visible lg:space-x-2 invisible md:space-x-0 items-end justify-end">
             <li
               className={`px-4 py-1 rounded-full ${
-                location.pathname === '/' ? 'bg-[#DC143C] text-white' : 'text-black hover:bg-gray-300 transition-transform duration-500'
+                location.pathname === '/dba' ? 'bg-[#DC143C] text-white' : 'text-black hover:bg-gray-300 transition-transform duration-500'
               }`}
             >
-              <Link to="/">Home</Link>
+              <Link to="/dba">Home</Link>
             </li>
             <li
               className={`px-4 py-1 rounded-full ${
-                location.pathname === '/member' ? 'bg-[#49B8D3] text-white' : 'text-black hover:bg-gray-300 transition-transform duration-500'
+                location.pathname === '/dba/add' ? 'bg-[#49B8D3] text-white' : 'text-black hover:bg-gray-300 transition-transform duration-500'
               }`}
             >
-              <Link to="/member">Member</Link>
+              <Link to="/dba/add">Add Member</Link>
             </li>
             <li
               className={`px-4 py-1 rounded-full ${
-                location.pathname === '/achievement' ? 'bg-[#FFD801] text-white' : 'text-black hover:bg-gray-300 transition-transform duration-500'
+                location.pathname === '/dba/about' ? 'bg-[#FFD801] text-white' : 'text-black hover:bg-gray-300 transition-transform duration-500'
               }`}
             >
-              <Link to="/achievement">Achievement</Link>
-            </li>
-            <li
-              className={`px-4 py-1 rounded-full ${
-                location.pathname === '/profile' ? 'bg-[#0066CC] text-white' : 'text-black hover:bg-gray-300 transition-transform duration-500'
-              }`}
-            >
-              <Link to="/profile">Profile</Link>
+              <Link to="/dba/about">About</Link>
             </li>
           </ul>
         </div>
-        <div className="mr-5 lg:mr-20 relative flex flex-row items-center justify-center gap-5">
-          <div
-            className={`transition-all duration-500 flex flex-row ${searchInputClass}`}
-            style={{ width: searchInputWidth }}
-          >
-            <div className="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-none">
-              <FaMagnifyingGlass className={`${searchInputClass === 'focus' ? 'text-blue-500': 'text-gray-400'}`} />
-            </div>
-            <input
-              type="text"
-              placeholder="Search Member"
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              onFocus={handleSearchFocus}
-              onBlur={handleSearchBlur}
-              className="p-2 pl-5 border-2 rounded-full"
-              style={{ width: '100%' }}
-            />
-          </div>
-          {showSearchResults && (
-            <div className="absolute top-14 bg-white border border-gray-300 w-full overflow-y-auto rounded-xl shadow-md">
-              {filteredMembers.slice(0, 5).map((member) => (
-                <div
-                  key={member.id}
-                  className="p-2 cursor-pointer hover:bg-gray-200 flex flex-row items-center justify-start"
-                  onClick={() => {
-                    hideSearchResultsOverlay();
-                  }}
-                >
-                  <div className="w-8 h-8 rounded-full overflow-hidden mr-4">
-                    <img
-                      src={member.photo}
-                      alt={member.name}
-                      style={{ backgroundImage: `url(${bgMember})`, backgroundSize: 'cover' }}
-                      className={`w-full h-full object-cover ${getBackgroundColor(member.id)}`}
-                    />
-                  </div>
-                  <h2>{member.name}</h2>
-                </div>
-              ))}
-            </div>
+        <h2 className='lg:flex absolute inset-0 flex items-center justify-center mr-10'>
+          {location.pathname === '/dba' && (
+            <h2>Dashboard Admin</h2>
           )}
-        </div>
+        </h2>
       </nav>
       <style>
         {`
@@ -170,4 +125,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default HeaderAdmin;
