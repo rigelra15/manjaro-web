@@ -73,17 +73,10 @@ const HeaderAdmin = () => {
             <img src={logoManjaro} alt="logo-manjaro" className="w-16" />
           </Link>
         </div>
-        <div className="lg:hidden">
-          <button onClick={toggleMenu} className="p-2">
-            <FaBars />
-          </button>
-        </div>
         <div
-          className={`${
-            menuOpen ? 'block' : 'hidden'
-          } lg:flex absolute inset-0 flex items-center justify-end mr-10 z-50`}
+          className={`lg:flex absolute inset-0 flex items-center justify-end mr-10 z-50`}
         >
-          <ul className="flex lg:visible lg:space-x-2 invisible md:space-x-0 items-end justify-end">
+          <ul className="flex visible lg:space-x-2 md:space-x-0 items-end justify-end">
             <li
               className={`px-4 py-1 rounded-full ${
                 location.pathname === '/dba' ? 'bg-[#DC143C] text-white' : 'text-black hover:bg-gray-300 transition-transform duration-500'
@@ -108,9 +101,9 @@ const HeaderAdmin = () => {
           </ul>
         </div>
         <h2 className='lg:flex absolute inset-0 flex items-center justify-center mr-10'>
-          {location.pathname === '/dba' && (
+          {/* {location.pathname === '/dba' && (
             <h2>Dashboard Admin</h2>
-          )}
+          )} */}
         </h2>
       </nav>
       <style>

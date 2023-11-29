@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import fireDb from '../../firebase'
 import { Link } from 'react-router-dom'
 import './Home.css'
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 const DashboardAdmin = () => {
   const [data, setData] = useState({})
@@ -48,7 +49,7 @@ const DashboardAdmin = () => {
             <th style={{ textAlign: 'center' }}>Name</th>
             <th style={{ textAlign: 'center' }}>NRP</th>
             <th style={{ textAlign: 'center' }}>Email</th>
-            <th style={{ textAlign: 'center' }}>Password</th>
+            {/* <th style={{ textAlign: 'center' }}>Password</th> */}
             <th style={{ textAlign: 'center' }}>Action</th>
           </tr>
         </thead>
@@ -60,17 +61,17 @@ const DashboardAdmin = () => {
                 <td>{data[id].name}</td>
                 <td>{data[id].nrp}</td>
                 <td>{data[id].email}</td>
-                <td>
+                {/* <td>
                   {showPassword ? (
                     data[id].password
                   ) : (
                     <span className='password-placeholder'>*********</span>
                   )}
-                </td>
+                </td> */}
                 <td>
-                  <button className='btn btn-toggle' onClick={togglePassword}>
-                    {showPassword ? 'Hide Password' : 'Show Password'}
-                  </button>
+                  {/* <button className='text-black' onClick={togglePassword}>
+                    {showPassword ? <FaEyeSlash /> : <FaEye /> }
+                  </button> */}
                   <Link to={`/dba/update/${id}`}>
                     <button className='btn btn-edit'>Edit</button>
                   </Link>

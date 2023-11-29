@@ -73,17 +73,10 @@ const NavBar = () => {
             <img src={logoManjaro} alt="logo-manjaro" className="w-16" />
           </Link>
         </div>
-        <div className="lg:hidden">
-          <button onClick={toggleMenu} className="p-2">
-            <FaBars />
-          </button>
-        </div>
         <div
-          className={`${
-            menuOpen ? 'block' : 'hidden'
-          } lg:flex absolute inset-0 flex items-center justify-center`}
+          className={`lg:flex absolute inset-0 flex items-center justify-center`}
         >
-          <ul className="flex lg:visible lg:space-x-2 invisible md:space-x-0 items-center justify-center">
+          <ul className="flex visible lg:space-x-2 md:space-x-0 items-center justify-center">
             <li
               className={`px-4 py-1 rounded-full ${
                 location.pathname === '/' ? 'bg-[#DC143C] text-white' : 'text-black hover:bg-gray-300 transition-transform duration-500'
