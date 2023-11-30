@@ -11,6 +11,7 @@ import { FaSignOutAlt } from 'react-icons/fa';
 import { MdOutlineSpaceDashboard, MdArrowForwardIos } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
 import { BsGear } from "react-icons/bs";
+import { RiAdminFill } from "react-icons/ri";
 
 const getBackgroundColor = (id) => {
   const colors = ['bg-[#DC143C]', 'bg-[#49B8D3]', 'bg-[#FFD801]', 'bg-[#0066CC]'];
@@ -99,6 +100,8 @@ const NavBar = () => {
     }
   });
 
+
+
   return (
     <>
       <nav className="bg-opacity-70 backdrop-blur-md bg-white p-2 py-3 justify-between flex items-center fixed w-full z-50 shadow-md">
@@ -123,13 +126,13 @@ const NavBar = () => {
               <Link to="/">Home</Link>
             </li>
             <li className={`px-4 py-1 rounded-full ${location.pathname === '/member' ? 'bg-[#49B8D3] text-white' : 'text-black hover:bg-gray-300 transition-transform duration-500'}`}>
-              <Link to="/member">Member</Link>
+              {user ? <Link to="/member">Member</Link> : <Link to="/signin">Member</Link>}
             </li>
             <li className={`px-4 py-1 rounded-full ${location.pathname === '/achievement' ? 'bg-[#FFD801] text-white' : 'text-black hover:bg-gray-300 transition-transform duration-500'}`}>
-              <Link to="/achievement">Achievement</Link>
+              {user ? <Link to="/achievement">Achievement</Link> : <Link to="/signin">Achievement</Link>}
             </li>
             <li className={`px-4 py-1 rounded-full ${location.pathname === '/profile' ? 'bg-[#0066CC] text-white' : 'text-black hover:bg-gray-300 transition-transform duration-500'}`}>
-              <Link to="/profile">Profile</Link>
+              {user ? <Link to="/profile">Profile</Link> : <Link to="/signin">Profile</Link>}
             </li>
           </ul>
         </div>
@@ -151,7 +154,7 @@ const NavBar = () => {
             {user ? ( // Tampilkan tautan profil jika pengguna sudah login
               <>
                 <ul className='flex flex-row gap-2 items-center justify-center'>
-                  <li className={`${showPopupMenu ? 'lg:opacity-100' : 'lg:opacity-0'} lg:transition-all lg:duration-300 lg:ease-in-out opacity-100 mr-2`}>
+                  <li className={`${showPopupMenu ? 'opacity-100' : 'opacity-0'} lg:transition-all lg:duration-300 lg:opacity-100 lg:ease-in-out mr-2`}>
                     {user.displayName}
                   </li>
                   <li className='bg-white p-[2px] border-2 border-sky-500 rounded-full'>
@@ -181,7 +184,16 @@ const NavBar = () => {
               </div>
               <div className='bg-white border-2 rounded-2xl w-fit'>
                 <ul className='space-y-3'>
-                  <li className='flex flex-row gap-2 items-center justify-start py-2 px-5 pt-3 cursor-pointer'>
+                  {user.displayName === 'Rigel Ramadhani W.' && (
+                    <Link to='/dba'>
+                      <li className='flex flex-row gap-2 bg-red-500 pb-4 rounded-t-xl items-center justify-start px-5 pt-4 cursor-pointer'>
+                        <RiAdminFill className='text-white' />
+                        <span className='text-white'>Dashboard</span>
+                        <span className='text-sm bg-white rounded-full px-2 py-1 text-red-500'>Admin</span>
+                      </li>
+                    </Link>
+                  )}
+                  <li className={`flex flex-row gap-2 items-center justify-start py-2 px-5 ${user.displayName === 'Rigel Ramadhani W.' ? '' : 'pt-4'} cursor-pointer`}>
                     <MdOutlineSpaceDashboard />
                     <span>Dashboard</span>
                   </li>

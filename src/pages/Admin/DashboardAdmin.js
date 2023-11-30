@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import './Home.css'
 import { toast } from 'react-toastify'
 import HeaderAdmin from '../../components/Header'
+import { Helmet } from 'react-helmet'
 
 const DashboardAdmin = () => {
   const [data, setData] = useState({})
@@ -38,7 +39,7 @@ const DashboardAdmin = () => {
     <>
       <HeaderAdmin />
       <div className='pt-[100px] flex justify-center'>
-        <table className='styled-table'>
+        <table className='styled-table rounded-2xl'>
           <thead>
             <tr>
               <th style={{ textAlign: 'center' }}>No</th>
@@ -81,6 +82,9 @@ const DashboardAdmin = () => {
             })}
           </tbody>
         </table>
+        <Helmet>
+          <title>Dashboard | Admin</title>
+        </Helmet>
       </div>
     </>
   );

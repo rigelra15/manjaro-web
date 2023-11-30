@@ -7,6 +7,8 @@ import { ref, listAll, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../firebase';
 import { FaArrowLeft } from 'react-icons/fa6';
 import './View.css';
+import { Helmet } from 'react-helmet';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const View = () => {
   const [user, setUser] = useState({});
@@ -44,9 +46,14 @@ const View = () => {
         <div className="flex flex-row items-center justify-center">
           <div>
             {userImageUrl && (
-              <>
-                <img src={userImageUrl} alt={`Profile of ${user.name}`} width={320} className='w-[280px] h-[370px] rounded-lg object-cover bg-sky-500' style={{ backgroundImage: `url(${bgMember})`, backgroundSize: 'cover'}} />
-              </>
+              <LazyLoadImage 
+              src={userImageUrl}
+              alt={`Profile of ${user.name}`}
+              width={320}
+              className='w-[280px] h-[370px] rounded-lg object-cover bg-sky-500'
+              style={{ backgroundImage: `url(${bgMember})`, backgroundSize: 'cover'}}
+              effect='blur'
+              />
             )}
           </div>
             <img
@@ -78,6 +85,9 @@ const View = () => {
           </button>
         </Link>
       </div>
+      <Helmet>
+        <title>{`${user.name} | View Member - Admin`}</title>
+      </Helmet>
     </div>
   );
 };

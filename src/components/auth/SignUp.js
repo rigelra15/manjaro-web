@@ -6,13 +6,15 @@ import logoManjaro from '../../assets/logo-manjaro.png';
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 const SignUp = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
+  const [nrp, setNRP] = useState()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-    const signUp = (e) => {
-      e.preventDefault()
-      createUserWithEmailAndPassword(auth, email, password)
-    }
+  const signUp = (e) => {
+    e.preventDefault()
+    createUserWithEmailAndPassword(auth, email, password)
+  }
   return (
     <>
       <div className='flex items-center justify-center h-screen'>

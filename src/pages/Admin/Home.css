@@ -11,6 +11,7 @@
     background-color: #009879;
     color: #ffffff;
     text-align: center;
+    border-radius: 20px;
 }
 
 .styled-table th, .styled-table td {

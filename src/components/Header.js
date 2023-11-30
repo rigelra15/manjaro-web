@@ -33,8 +33,8 @@ const HeaderAdmin = () => {
   return (
     <>
       <nav className="bg-opacity-70 backdrop-blur-md bg-white p-4 justify-between flex items-center fixed w-full z-50 shadow-md">
-        <div className="ml-5 lg:ml-20">
-          <Link to="/">
+        <div className="ml-5 lg:ml-20 z-[9999]">
+          <Link to="/" className='cursor-pointer'>
             <img src={logoManjaro} alt="logo-manjaro" className="w-16" />
           </Link>
         </div>
