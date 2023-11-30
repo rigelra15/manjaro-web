@@ -30,15 +30,18 @@ import View from './pages/Admin/View.js';
 import About from './pages/Admin/About.js';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-import HeaderAdmin from './components/Header.js';
+import SignIn from './components/auth/SignIn.js';
+import SignUp from './components/auth/SignUp.js';
+
 
 const App = () => {
   return (
     <Router>
       <ToastContainer position='top-center' />
-      <HeaderAdmin />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/member" element={<Member />} />
         <Route path="/achievement" element={<Achievement />} />
         <Route path="/profile" element={<Profile />} />

@@ -3,6 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import './AddEdit.css';
 import fireDb from '../../firebase';
 import { toast } from 'react-toastify';
+import { storage } from '../../firebase';
+import { ref, uploadBytes } from 'firebase/storage'
+import HeaderAdmin from '../../components/Header';
 
 const initialState = {
   name: '',
@@ -13,13 +16,14 @@ const initialState = {
 const AddEdit = () => {
   const [state, setState] = useState(initialState)
   const [data, setData] = useState({})
+  const [imageUpload, setImageUpload] = useState(null)
 
   const {name, nrp, email, password} = state
-
+  
   const navigate = useNavigate();
-
+  
   const { id } = useParams();
-
+  
   useEffect(() => {
     fireDb.ref("members").on("value", (snapshot) => {
       if (snapshot.val() !== null) {
@@ -33,24 +37,24 @@ const AddEdit = () => {
       setData({})
     }
   }, [id])
-
+  
   useEffect(() => {
     if(id) {
       setState({...data[id]})
     } else {
       setState({...initialState})
     }
-
+    
     return () => {
       setState({...initialState})
     }
   }, [id, data])
-
+  
   const handleInputChange = (e) => {
     const {name, value} = e.target
     setState({ ...state, [name]: value })
   }
-
+  
   const handleSubmit = (e) => {
     e.preventDefault()
     if(!name || !nrp || !email || !password) {
@@ -80,26 +84,43 @@ const AddEdit = () => {
       setTimeout(() => navigate('/dba', {replace: true}), 500)
     }
   }
-
-
+  
+  const uploadImage = () => {
+    if (imageUpload == null) return;
+    const imageName = `${nrp}`;
+    const imageRef = ref(storage, `images/${imageName}`);
+    
+    uploadBytes(imageRef, imageUpload)
+  };
+  
   return (
-    <div className='pt-[100px]'>
-        <form className='p-[15px] m-auto max-w-[400px] content-center' onSubmit={handleSubmit}>
-          <label htmlFor="name">Name</label>
-          <input type="text" id='name' name='name' placeholder='Your Name...' value={name || ""} onChange={handleInputChange} />
+    <>
+      <HeaderAdmin />
+      <div className='pt-[100px] flex items-center justify-center'>
+          <form className='p-[15px] m-auto max-w-[600px] content-center flex flex-col gap-6' onSubmit={handleSubmit}>
+            <div className='flex flex-row gap-5 items-center'>
+              <div>
+                <label htmlFor="name">Name</label>
+                <input type="text" id='name' name='name' placeholder='Your Name...' value={name || ""} onChange={handleInputChange} />
 
-          <label htmlFor="nrp">NRP</label>
-          <input type="number" id='nrp' name='nrp' placeholder='Your NRP...' value={nrp || ""} onChange={handleInputChange} />
+                <label htmlFor="nrp">NRP</label>
+                <input type="number" id='nrp' name='nrp' placeholder='Your NRP...' value={nrp || ""} onChange={handleInputChange} />
 
-          <label htmlFor="email">Email</label>
-          <input type="email" id='email' name='email' placeholder='Your Email...' value={email || ""} onChange={handleInputChange} />
+                <label htmlFor="email">Email</label>
+                <input type="email" id='email' name='email' placeholder='Your Email...' value={email || ""} onChange={handleInputChange} />
 
-          <label htmlFor="password">Password</label>
-          <input type="password" id='password' name='password' placeholder='Your Password...' value={password || ""} onChange={handleInputChange} />
-
-          <input type="submit" value={id ? "Update" : "Save"} />
-        </form>
-    </div>
+                <label htmlFor="password">Password</label>
+                <input type="password" id='password' name='password' placeholder='Your Password...' value={password || ""} onChange={handleInputChange} />
+              </div>
+              <div>
+                <label htmlFor="file">Photo</label>
+                <input type="file" id='file' name='file' onChange={(event) => {setImageUpload(event.target.files[0])}}/>
+              </div>
+            </div>
+            <input className='w-full' type="submit" value={id ? "Update" : "Save"} onClick={uploadImage} />
+          </form>
+      </div>
+    </>
   )
 }
 

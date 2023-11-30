@@ -1,69 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logoManjaro from '../assets/logo-manjaro.png';
-import { FaMagnifyingGlass, FaBars } from 'react-icons/fa6';
-import bgMember from '../assets/bgMember20-Black.png';
-
-import members from '../membersData';
-
-const getBackgroundColor = (id) => {
-  const colors = ['bg-[#DC143C]', 'bg-[#49B8D3]', 'bg-[#FFD801]', 'bg-[#0066CC]'];
-  return colors[id % colors.length];
-};
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase';
+import { FaSignOutAlt } from 'react-icons/fa';
 
 const HeaderAdmin = () => {
   const location = useLocation();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [searchInput, setSearchInput] = useState('');
-  const [filteredMembers, setFilteredMembers] = useState(members);
-  const [searchInputClass, setSearchInputClass] = useState('');
-  const [searchInputWidth, setSearchInputWidth] = useState('200px');
-  const [showSearchResults, setShowSearchResults] = useState(false);
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const handleSearch = () => {
-    const searchTerm = searchInput.toLowerCase();
-    const filtered = members.filter(
-      (member) =>
-        member.name.toLowerCase().includes(searchTerm) || member.nrp.includes(searchTerm)
-    );
-    setFilteredMembers(filtered);
-  };
-
-  const showSearchResultsOverlay = () => {
-    setShowSearchResults(true);
-  };
-
-  const hideSearchResultsOverlay = () => {
-    setShowSearchResults(false);
-  };
-
-  const handleSearchFocus = () => {
-    setSearchInputClass('focus');
-    setSearchInputWidth('250px');
-    showSearchResultsOverlay();
-  };
-
-  const handleSearchBlur = () => {
-    setSearchInputClass('');
-    setSearchInputWidth('200px');
-    setTimeout(() => hideSearchResultsOverlay(), 1);
-  };
-
-  const handleResultClick = () => {
-    hideSearchResultsOverlay();
-  };
+  const [user, setUser] = useState(null); // State untuk menyimpan informasi pengguna
 
   useEffect(() => {
-    // Tambahkan kondisi untuk hanya melakukan pencarian jika searchInput tidak kosong
-    if (searchInput.trim() !== '') {
-      handleSearch();
-      showSearchResultsOverlay();
-    }
-  }, [searchInput]);
+    // Cek apakah pengguna sudah login, jika iya, atur state user
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => {
+      unsubscribe(); // Membersihkan listener saat komponen dibongkar
+    };
+  }, []);
+
+  const handleSignOut = () => {
+    // Fungsi untuk logout
+    signOut(auth);
+    setUser(null);
+  };
 
   return (
     <>
@@ -76,7 +41,7 @@ const HeaderAdmin = () => {
         <div
           className={`lg:flex absolute inset-0 flex items-center justify-end mr-10 z-50`}
         >
-          <ul className="flex visible lg:space-x-2 md:space-x-0 items-end justify-end">
+          <ul className="flex visible lg:space-x-2 md:space-x-0 items-center justify-end">
             <li
               className={`px-4 py-1 rounded-full ${
                 location.pathname === '/dba' ? 'bg-[#DC143C] text-white' : 'text-black hover:bg-gray-300 transition-transform duration-500'
@@ -98,19 +63,36 @@ const HeaderAdmin = () => {
             >
               <Link to="/dba/about">About</Link>
             </li>
+            {user ? ( // Tampilkan tautan profil jika pengguna sudah login
+              <>
+                <li
+                  className="px-5 py-2 rounded-2xl bg-sky-500 text-white"
+                >
+                  {/* <Link to="/profile">{user.email}</Link> */}
+                  {user.email}
+                </li>
+                <li
+                  className="px-3 py-3 rounded-2xl bg-red-500 text-white hover:bg-gray-500"
+                  onClick={handleSignOut}
+                >
+                  <FaSignOutAlt />
+                </li>
+              </>
+            ) : (
+              <li
+                className="px-5 py-2 rounded-2xl bg-sky-500 text-white hover:bg-gray-500"
+              >
+                <Link to="/signin">Sign In</Link>
+              </li>
+            )}
           </ul>
         </div>
-        <h2 className='lg:flex absolute inset-0 flex items-center justify-center mr-10'>
-          {/* {location.pathname === '/dba' && (
-            <h2>Dashboard Admin</h2>
-          )} */}
-        </h2>
       </nav>
       <style>
         {`
           @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
           .focus {
-            width: 250px; /* Set the width when the input is focused */
+            width: 250px;
           }
         `}
       </style>
