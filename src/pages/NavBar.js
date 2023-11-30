@@ -261,13 +261,13 @@ const NavBar = () => {
                 <Link to="/">Home</Link>
               </li>
               <li className={`px-4 py-1 rounded-full ${location.pathname === '/member' ? 'bg-[#49B8D3] text-white' : 'text-white hover:bg-gray-300 hover:text-black transition-transform duration-500'}`}>
-                <Link to="/member">Member</Link>
+                {user ? <Link to="/member">Member</Link> : <Link to="/signin">Member</Link>}
               </li>
               <li className={`px-4 py-1 rounded-full ${location.pathname === '/achievement' ? 'bg-[#FFD801] text-white' : 'text-white hover:bg-gray-300 hover:text-black transition-transform duration-500'}`}>
-                <Link to="/achievement">Achievement</Link>
+                {user ? <Link to="/achievement">Achievement</Link> : <Link to="/signin">Achievement</Link>}
               </li>
               <li className={`px-4 py-1 rounded-full ${location.pathname === '/profile' ? 'bg-[#0066CC] text-white' : 'text-white hover:bg-gray-300 hover:text-black transition-transform duration-500'}`}>
-                <Link to="/profile">Profile</Link>
+                {user ? <Link to="/profile">Profile</Link> : <Link to="/signin">Profile</Link>}
               </li>
             </ul>
           </div>
