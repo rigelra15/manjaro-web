@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaMagnifyingGlass, FaBars } from 'react-icons/fa6';
 import bgMember from '../assets/bgMember20-Black.png';
 import logoManjaro from '../assets/logo-manjaro.png';
@@ -20,6 +20,7 @@ const getBackgroundColor = (id) => {
 
 const NavBar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [filteredMembers, setFilteredMembers] = useState(members);
@@ -58,6 +59,7 @@ const NavBar = () => {
     // Fungsi untuk logout
     signOut(auth);
     setUser(null);
+    navigate('/', { replace: true });
   };
 
   const toggleMenu = () => {
@@ -100,7 +102,14 @@ const NavBar = () => {
     }
   });
 
+  // Assuming you have a list of names like this
+  const memberEmails = ['admin@gmail.com', 'rigel8911@gmail.com', 'syawalridho3@gmail.com', 'manjaro.ce22@gmail.com', 'hypertopiaid@gmail.com'];
 
+  // Check if the user's display name is in the list
+  const isMember = user && memberEmails.includes(user.email);
+
+  const bgColor = user && user.email === 'rigel8911@gmail.com' ? 'bg-[#DC143C]' : (isMember ? 'bg-[#49B8D3]' : 'bg-black');
+  const textContent = user && user.email === 'rigel8911@gmail.com' ? 'Admin' : (isMember ? 'Member' : 'Guest');
 
   return (
     <>
@@ -154,8 +163,9 @@ const NavBar = () => {
             {user ? ( // Tampilkan tautan profil jika pengguna sudah login
               <>
                 <ul className='flex flex-row gap-2 items-center justify-center'>
-                  <li className={`${showPopupMenu ? 'opacity-100' : 'opacity-0'} lg:transition-all lg:duration-300 lg:opacity-100 lg:ease-in-out mr-2`}>
-                    {user.displayName}
+                  <li className={`${showPopupMenu ? 'opacity-100' : 'opacity-0'} lg:transition-all lg:duration-300 lg:opacity-100 lg:ease-in-out mr-2 flex flex-col items-end justify-end`}>
+                    <span>{user.displayName}</span>
+                    <span className={`text-xs px-3 py-1 ${bgColor} text-white rounded-full`}>{textContent}</span>
                   </li>
                   <li className='bg-white p-[2px] border-2 border-sky-500 rounded-full'>
                     <img src={user.photoURL} alt="" className='w-10 h-10 rounded-full border-2 border-white' />
