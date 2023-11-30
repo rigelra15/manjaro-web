@@ -108,8 +108,10 @@ const NavBar = () => {
   // Check if the user's display name is in the list
   const isMember = user && memberEmails.includes(user.email);
 
-  const bgColor = user && user.email === 'rigel8911@gmail.com' || 'syawalridho3@gmail.com' ? 'bg-[#DC143C]' : (isMember ? 'bg-[#49B8D3]' : 'bg-black');
-  const textContent = user && user.email === 'rigel8911@gmail.com' || 'syawalridho3@gmail.com' ? 'Admin' : (isMember ? 'Member' : 'Guest');
+  const isAdmin = user && (user.email === 'rigel8911@gmail.com' || user.email === 'syawalridho3@gmail.com');
+  const bgColor = isAdmin ? 'bg-[#DC143C]' : (isMember ? 'bg-[#49B8D3]' : 'bg-black');
+  const textContent = isAdmin ? 'Admin' : (isMember ? 'Member' : 'Guest');
+
 
   return (
     <>
