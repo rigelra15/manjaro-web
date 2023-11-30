@@ -1,6 +1,6 @@
 import firebase from 'firebase/compat/app'
 import { getStorage } from 'firebase/storage'
-import { getAuth } from 'firebase/auth'
+import { getAuth, GoogleAuthProvider } from 'firebase/auth'
 import "firebase/compat/database"
 
 const firebaseConfig = {
@@ -14,6 +14,8 @@ const firebaseConfig = {
 };
 
 const fireDb = firebase.initializeApp(firebaseConfig);
-export const storage = getStorage(fireDb)
-export const auth = getAuth(fireDb)
+const storage = getStorage(fireDb)
+const auth = getAuth(fireDb)
+const provider = new GoogleAuthProvider()
+export {storage, auth, provider}
 export default fireDb.database()

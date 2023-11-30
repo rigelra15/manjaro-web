@@ -3,11 +3,10 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import NavBar from './NavBar';
 import members from '../membersData';
-import bgMember from '../assets/bgMember20-Black.png';
 import { Helmet } from 'react-helmet';
 import { FaThList } from 'react-icons/fa';
 import { BsFillGridFill } from 'react-icons/bs';
-import { FaSortAmountDown, FaSortAmountUp, FaSortAlphaDown, FaSortAlphaUp, FaSortNumericDown, FaSortNumericUp } from "react-icons/fa";
+import { FaSortAlphaDown, FaSortAlphaUp, FaSortNumericDown, FaSortNumericUp } from "react-icons/fa";
 import logoWhite from '../assets/logoWhite.png';
 
 const getBackgroundColor = (id) => {
@@ -106,7 +105,6 @@ const Member = () => {
             <option value={3}>3</option>
             <option value={4}>4</option>
             <option value={5}>5</option>
-            <option value={6}>6</option>
           </select>
         )}
         {!isGrid && (
@@ -120,7 +118,6 @@ const Member = () => {
             <option value={3}>3</option>
             <option value={4}>4</option>
             <option value={5}>5</option>
-            <option value={6}>6</option>
           </select>
         )}
         <button

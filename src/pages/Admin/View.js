@@ -5,7 +5,7 @@ import logoWhite from '../../assets/logoWhite.png'
 import { useParams, Link } from 'react-router-dom';
 import { ref, listAll, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../firebase';
-import { FaA, FaArrowLeft } from 'react-icons/fa6';
+import { FaArrowLeft } from 'react-icons/fa6';
 import './View.css';
 
 const View = () => {
@@ -36,7 +36,7 @@ const View = () => {
         });
       }
     });
-  }, [user.nrp]);
+  }, [user.nrp, imageListRef]);
 
   return (
     <div className='pt-[150px] flex flex-col gap-3 items-center justify-center'>

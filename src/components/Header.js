@@ -66,10 +66,11 @@ const HeaderAdmin = () => {
             {user ? ( // Tampilkan tautan profil jika pengguna sudah login
               <>
                 <li
-                  className="px-5 py-2 rounded-2xl bg-sky-500 text-white"
+                  className="px-5 py-2 rounded-2xl border-2 border-gray-200 flex flex-row gap-2 items-center justify-center"
                 >
                   {/* <Link to="/profile">{user.email}</Link> */}
-                  {user.email}
+                  <p>{user.displayName}</p>
+                  <img src={user.photoURL} alt="" className='w-7 h-7 rounded-full' />
                 </li>
                 <li
                   className="px-3 py-3 rounded-2xl bg-red-500 text-white hover:bg-gray-500"

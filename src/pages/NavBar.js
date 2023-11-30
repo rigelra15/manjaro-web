@@ -4,7 +4,13 @@ import { FaMagnifyingGlass, FaBars } from 'react-icons/fa6';
 import bgMember from '../assets/bgMember20-Black.png';
 import logoManjaro from '../assets/logo-manjaro.png';
 import members from '../membersData';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase';
 import { IoCloseOutline } from "react-icons/io5";
+import { FaSignOutAlt } from 'react-icons/fa';
+import { MdOutlineSpaceDashboard, MdArrowForwardIos } from "react-icons/md";
+import { FaRegUser } from "react-icons/fa6";
+import { BsGear } from "react-icons/bs";
 
 const getBackgroundColor = (id) => {
   const colors = ['bg-[#DC143C]', 'bg-[#49B8D3]', 'bg-[#FFD801]', 'bg-[#0066CC]'];
@@ -19,6 +25,39 @@ const NavBar = () => {
   const [searchInputClass, setSearchInputClass] = useState('');
   const [searchInputWidth, setSearchInputWidth] = useState('200px');
   const [showSearchResults, setShowSearchResults] = useState(false);
+  const [showPopupMenu, setShowPopupMenu] = useState(false);
+  const [user, setUser] = useState(null); // State untuk menyimpan informasi pengguna
+
+  // Function to handle hover and show pop-up menu
+  const handleUserPhotoHover = () => {
+    setShowPopupMenu(true);
+  };
+
+  // Function to handle mouse leave and hide pop-up menu
+  const handleUserPhotoLeave = () => {
+    setShowPopupMenu(false);
+  };
+
+  useEffect(() => {
+    // Cek apakah pengguna sudah login, jika iya, atur state user
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => {
+      unsubscribe(); // Membersihkan listener saat komponen dibongkar
+    };
+  }, []);
+
+  const handleSignOut = () => {
+    // Fungsi untuk logout
+    signOut(auth);
+    setUser(null);
+  };
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -53,28 +92,29 @@ const NavBar = () => {
     setTimeout(() => hideSearchResultsOverlay(), 1);
   };
 
-  const handleResultClick = () => {
-    hideSearchResultsOverlay();
-  };
-
   useEffect(() => {
     if (searchInput.trim() !== '') {
       handleSearch();
       showSearchResultsOverlay();
     }
-  }, [searchInput]);
+  });
 
   return (
     <>
-      <nav className="bg-opacity-70 backdrop-blur-md bg-white p-2 justify-between flex items-center fixed w-full z-50 shadow-md">
-        <div className="lg:hidden">
+      <nav className="bg-opacity-70 backdrop-blur-md bg-white p-2 py-3 justify-between flex items-center fixed w-full z-50 shadow-md">
+        <div className="lg:hidden flex flex-row gap-2 items-center justify-center">
           <button onClick={toggleMenu} className="ml-5 text-2xl focus:outline-none">
             <FaBars />
           </button>
+          <div className="ml-5 lg:ml-20 cursor-pointer z-50">
+            <Link to="/">
+              <img src={logoManjaro} alt="logo-manjaro" className="w-16 cursor-pointer" />
+            </Link>
+          </div>
         </div>
-        <div className="ml-5 lg:ml-20">
+        <div className="ml-5 lg:ml-20 cursor-pointer lg:block hidden z-50">
           <Link to="/">
-            <img src={logoManjaro} alt="logo-manjaro" className="w-16" />
+            <img src={logoManjaro} alt="logo-manjaro" className="w-16 cursor-pointer" />
           </Link>
         </div>
         <div className="lg:flex absolute lg:visible invisible inset-0 flex items-center justify-center">
@@ -95,10 +135,7 @@ const NavBar = () => {
         </div>
         <div className="mr-5 lg:mr-20 relative flex flex-row items-center justify-center gap-5">
           <div className={`transition-all duration-500 flex flex-row rounded-xl ${searchInputClass}`} style={{ width: searchInputWidth }}>
-            <div className="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-none">
-              <FaMagnifyingGlass className={`${searchInputClass === 'focus' ? 'text-blue-500' : 'text-gray-400'}`} />
-            </div>
-            <input
+            {/* <input
               type="text"
               placeholder="Search Member"
               value={searchInput}
@@ -107,8 +144,63 @@ const NavBar = () => {
               onBlur={handleSearchBlur}
               className="p-2 pl-5 border-2 rounded-full"
               style={{ width: '100%' }}
-            />
+            /> */}
+            {/* <FaMagnifyingGlass className={`${searchInputClass === 'focus' ? 'text-blue-500' : 'text-gray-400'} -mr-5`} /> */}
           </div>
+          <div className='flex flex-row gap-3' onMouseEnter={handleUserPhotoHover} onMouseLeave={handleUserPhotoLeave}>
+            {user ? ( // Tampilkan tautan profil jika pengguna sudah login
+              <>
+                <ul className='flex flex-row gap-2 items-center justify-center'>
+                  <li className={`${showPopupMenu ? 'lg:opacity-100' : 'lg:opacity-0'} lg:transition-all lg:duration-300 lg:ease-in-out opacity-100 mr-2`}>
+                    {user.displayName}
+                  </li>
+                  <li className='bg-white p-[2px] border-2 border-sky-500 rounded-full'>
+                    <img src={user.photoURL} alt="" className='w-10 h-10 rounded-full border-2 border-white' />
+                  </li>
+                  <li>
+                    <MdArrowForwardIos className={`${showPopupMenu ? '-rotate-90' : 'rotate-90'} transition-all duration-200 ease-in-out w-3 h-3 text-gray-500 `}/>
+                  </li>
+                </ul>
+              </>
+            ) : (
+              <ul>
+                <Link to='/signin'>
+                  <li
+                    className="px-5 py-3 rounded-2xl bg-sky-500 text-white hover:bg-gray-500"
+                  >
+                    Sign In
+                  </li>
+                </Link>
+              </ul>
+            )}
+          </div>
+          {/* THIS IS THE POP UP MENU WHEN PROFILE PHOTO HOVERED */}
+          {user && (
+            <div onMouseEnter={handleUserPhotoHover} onMouseLeave={handleUserPhotoLeave} className={`${showPopupMenu ? 'opacity-100 visible' : 'opacity-0 invisible'} transition-all duration-300 ease-in-out flex flex-col items-end justify-end gap-0 absolute top-0 mt-[7px] right-0 z-20 w-fit`}>
+              <div className='w-10 h-12'>
+              </div>
+              <div className='bg-white border-2 rounded-2xl w-fit'>
+                <ul className='space-y-3'>
+                  <li className='flex flex-row gap-2 items-center justify-start py-2 px-5 pt-3 cursor-pointer'>
+                    <MdOutlineSpaceDashboard />
+                    <span>Dashboard</span>
+                  </li>
+                  <li className='flex flex-row gap-2 items-center justify-start py-2 px-5 cursor-pointer'>
+                    <FaRegUser />
+                    <span>My Profile</span>
+                  </li>
+                  <li className='flex flex-row gap-2 items-center justify-start py-2 px-5 cursor-pointer'>
+                      <BsGear />
+                      <span>Settings</span>
+                  </li>
+                  <li className='flex flex-row gap-2 items-center justify-start py-2 px-5 bg-red-500 text-white rounded-b-2xl cursor-pointer' onClick={handleSignOut}>
+                      <FaSignOutAlt />
+                      <span>Sign Out</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          )}
           {showSearchResults && (
             <div className="absolute top-14 bg-white border border-gray-300 w-full overflow-y-auto rounded-xl shadow-md">
               {filteredMembers.slice(0, 5).map((member) => (
@@ -135,7 +227,7 @@ const NavBar = () => {
         </div>
       </nav>
       {menuOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 lg:hidden visible">
           <button onClick={toggleMenu} className='absolute mt-6 ml-6'> 
             <IoCloseOutline className='w-10 h-10 text-white'/>
           </button>
