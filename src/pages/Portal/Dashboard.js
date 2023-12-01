@@ -22,7 +22,7 @@ const Divider = () => {
 };
 
 const Dashboard = () => {
-  const location = useLocation()
+  const location = useLocation();
 
   const [darkTheme, setDarkTheme] = useState(() => {
     return JSON.parse(localStorage.getItem('darkTheme')) || false;
@@ -32,6 +32,9 @@ const Dashboard = () => {
     return JSON.parse(localStorage.getItem('collapsed')) || false;
   });
 
+  // New state to keep track of the width of the device
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
   useEffect(() => {
     localStorage.setItem('darkTheme', JSON.stringify(darkTheme));
   }, [darkTheme]);
@@ -39,6 +42,20 @@ const Dashboard = () => {
   useEffect(() => {
     localStorage.setItem('collapsed', JSON.stringify(collapsed));
   }, [collapsed]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    // Add event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Remove event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const toggleTheme = () => {
     setDarkTheme(!darkTheme);
@@ -57,14 +74,25 @@ const Dashboard = () => {
           trigger={null}
           theme={darkTheme ? 'dark' : 'light'}
           className='text-white h-screen'
-          style={{ position: 'sticky', top: 0, zIndex: 100, height: '100vh' }} // Tambahkan style untuk membuat Sider tetap di tempat
+          style={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 100,
+            height: '100vh',
+          }}
+          collapsedWidth={windowWidth < 550 ? 0 : undefined} // Set collapsedWidth based on device width
         >
           <Logo darkTheme={darkTheme} collapsed={collapsed} />
           <Divider />
           <MenuList darkTheme={darkTheme} />
         </Sider>
         <Layout>
-          <Header className={`flex justify-between items-center shadow-md ${darkTheme ? colorBgContainer : 'bg-white'} ${darkTheme ? 'text-white' : 'text-black'}`} style={{ padding: 0, position: 'sticky', top: 0, zIndex: 90, }}>
+          <Header
+            className={`flex justify-between items-center shadow-md ${
+              darkTheme ? colorBgContainer : 'bg-white'
+            } ${darkTheme ? 'text-white' : 'text-black'}`}
+            style={{ padding: 0, position: 'sticky', top: 0, zIndex: 90 }}
+          >
             <div className='flex gap-1 items-center'>
               <Button onClick={() => setCollapsed(!collapsed)} className={`toggle mt-1 ${collapsed ? 'ml-[15px]' : 'ml-[15px]'}`} type='text' icon={collapsed ? <FaBars className={`${darkTheme ? 'text-white' : 'text-black'}`} /> : <FaBars className={`${darkTheme ? 'text-white' : 'text-black'}`} />} />
               {collapsed && (
