@@ -8,6 +8,13 @@ module.exports = {
       fontFamily: {
         'lexend-deca': ['Lexend Deca', 'sans-serif'],
       },
+      colors: {
+        "red-manjaro": "#DC143C",
+        "cyan-manjaro": "#49B8D3",
+        "yellow-manjaro": "#FFD801",
+        "blue-manjaro": "#0066CC",
+        "light-white": "rgba(255, 255, 255, 0.17)",
+      }
     },
   },
   plugins: [],

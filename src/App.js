@@ -32,7 +32,14 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import SignIn from './components/auth/SignIn.js';
 import SignUp from './components/auth/SignUp.js';
-
+import Base from './pages/Portal/Base.js';
+import BaseSecond from './pages/Portal/BaseSecond.js';
+import HeaderAdmin from './components/Header.js';
+import Account from './pages/Portal/Account.js';
+import Dashboard from './pages/Portal/Dashboard.js';
+import Events from './pages/Portal/Events.js';
+import Announcements from './pages/Portal/Announcements.js';
+import Settings from './pages/Portal/Settings.js';
 
 const App = () => {
   return (
@@ -40,6 +47,12 @@ const App = () => {
       <ToastContainer position='top-center' />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path='/portal/dashboard' element={<Dashboard />} />
+        <Route path='/portal/account' element={<Account />} />
+        <Route path='/portal/events' element={<Events />} />
+        <Route path='/portal/announcements' element={<Announcements />} />
+        <Route path='/portal/settings' element={<Settings />} />
+
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/member" element={<Member />} />
