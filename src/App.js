@@ -1,25 +1,5 @@
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import Home from './pages/Home';
-// import About from './pages/About';
-// import Contact from './pages/Contact';
-
-// function App() {
-//   return (
-//     <Router>
-//       <Routes>
-//         <Route path="/" element={<Home />} />
-//         <Route path="/about" element={<About />} />
-//         <Route path="/contact" element={<Contact />} />
-        
-//       </Routes>
-//     </Router>
-//   );
-// }
-
-// export default App;
-
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Home from './pages/Home.js';
 import Member from './pages/Member.js';
 import Achievement from './pages/Achievement.js';
@@ -32,9 +12,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import SignIn from './components/auth/SignIn.js';
 import SignUp from './components/auth/SignUp.js';
-import Base from './pages/Portal/Base.js';
-import BaseSecond from './pages/Portal/BaseSecond.js';
-import HeaderAdmin from './components/Header.js';
 import Account from './pages/Portal/Account.js';
 import Dashboard from './pages/Portal/Dashboard.js';
 import Events from './pages/Portal/Events.js';
@@ -47,7 +24,11 @@ const App = () => {
       <ToastContainer position='top-center' />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path='/portal' element={<Dashboard />} />
+        
+        <Route
+          path='/portal'
+          element={<Navigate to='/portal/dashboard' />}
+        />
         <Route path='/portal/dashboard' element={<Dashboard />} />
         <Route path='/portal/account' element={<Account />} />
         <Route path='/portal/events' element={<Events />} />
