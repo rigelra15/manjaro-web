@@ -47,6 +47,7 @@ const App = () => {
       <ToastContainer position='top-center' />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path='/portal' element={<Dashboard />} />
         <Route path='/portal/dashboard' element={<Dashboard />} />
         <Route path='/portal/account' element={<Account />} />
         <Route path='/portal/events' element={<Events />} />
