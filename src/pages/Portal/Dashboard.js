@@ -78,7 +78,7 @@ const Dashboard = () => {
             position: 'sticky',
             top: 0,
             zIndex: 100,
-            height: '100vh',
+            height: '100svh',
           }}
           collapsedWidth={windowWidth < 550 ? 0 : undefined} // Set collapsedWidth based on device width
         >

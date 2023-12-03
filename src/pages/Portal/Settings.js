@@ -57,7 +57,7 @@ const Settings = () => {
           trigger={null}
           theme={darkTheme ? 'dark' : 'light'}
           className='text-white h-screen'
-          style={{ position: 'sticky', top: 0, zIndex: 100, height: '100vh' }} // Tambahkan style untuk membuat Sider tetap di tempat
+          style={{ position: 'sticky', top: 0, zIndex: 100, height: '100svh' }} // Tambahkan style untuk membuat Sider tetap di tempat
         >
           <Logo darkTheme={darkTheme} collapsed={collapsed} />
           <Divider />
