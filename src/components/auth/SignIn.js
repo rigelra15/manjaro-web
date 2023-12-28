@@ -102,8 +102,10 @@ const SignIn = () => {
                 <input type="password" placeholder='Enter your password' value={password} onChange={(e) => setPassword(e.target.value)}></input>
                 <button type='submit' className='w-full hover:bg-sky-700 transition-all duration-300 ease-in-out bg-sky-500 py-3 rounded-xl mt-4 text-white'>Login</button>
               </form>
-              <div>
+              <div className='flex flex-row justify-between items-center gap-2'>
+                <hr className='my-4 w-[120px] border-gray-300' />
                 <p className='text-gray-400 my-4'>or</p>
+                <hr className='my-4 w-[120px] border-gray-300' />
               </div>
               <button className='hover:bg-gray-100 transition-all duration-300 ease-in-out w-full bg-white border-2 py-3 rounded-xl flex flex-row gap-2 items-center justify-center' onClick={handleGoogleSignIn}>
                 <FcGoogle className='w-6 h-6' />

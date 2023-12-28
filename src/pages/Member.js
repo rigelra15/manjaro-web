@@ -47,7 +47,7 @@ const Member = () => {
     <div>
       <NavBar />
       <div className="flex justify-center items-center">
-        <div className={`grid ${isGrid ? `lg:grid-cols-${columnCount} grid-cols-3` : `lg:grid-cols-${columnCount} grid-cols-1`} gap-4 mt-36 mx-5 lg:mx-20 mb-20`}>
+        <div className={`grid grid-cols-3 gap-4 mt-36 mx-5 lg:mx-20 mb-20`}>
           {sortedMembersArray.map((member) => (
             <div key={member.id} className={`relative rounded-[20px] overflow-hidden bg-white shadow-xl border-2 ${isGrid ? '2xl:w-72 lg:w-[250px] w-56' : 'w-full'}`}>
               {isGrid ? (
